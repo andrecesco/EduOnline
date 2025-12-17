@@ -98,23 +98,6 @@ public class AlunoTest
         Assert.Equal("O campo Nome deve ter no máximo 100 caracteres", exception.Message);
     }
 
-    //[Fact(DisplayName = "Alterar Email do Aluno deve retornar exception")]
-    //[Trait("Categoria", "Aluno Testes")]
-    //public void Aluno_AlterarEmail_DeveRetornarDomainException()
-    //{
-    //    // Arrange
-    //    var alunoFaker = GerarAluno();
-    //    var aluno = alunoFaker.Generate();
-    //    // Act
-    //    var exception = Assert.Throws<DomainException>(() => aluno.AlterarEmail(string.Empty));
-    //    // Assert
-    //    Assert.Equal("O campo Email deve ser preenchido", exception.Message);
-    //    // Act
-    //    exception = Assert.Throws<DomainException>(() => aluno.AlterarEmail(new string('a', 101)));
-    //    // Assert
-    //    Assert.Equal("O campo Email deve ter no máximo 100 caracteres", exception.Message);
-    //}
-
     [Fact(DisplayName = "Alterar Data de Nascimento do Aluno deve retornar exception")]
     [Trait("Categoria", "Aluno Testes")]
     public void Aluno_AlterarDataNascimento_DeveRetornarDomainException()
@@ -143,22 +126,6 @@ public class AlunoTest
         // Assert
         Assert.Equal(aluno.Nome, novoNome);
     }
-
-    //[Fact(DisplayName = "Alterar Email do Aluno deve alterar com sucesso")]
-    //[Trait("Categoria", "Aluno Testes")]
-    //public void Aluno_AlterarEmail_DeveAlterarComSucesso()
-    //{
-    //    // Arrange
-    //    var alunoFaker = GerarAluno();
-    //    var aluno = alunoFaker.Generate();
-    //    var novoEmail = new Faker().Person.Email;
-
-    //    // Act
-    //    aluno.AlterarEmail(novoEmail);
-
-    //    // Assert
-    //    Assert.Equal(aluno.Email, novoEmail);
-    //}
 
     [Fact(DisplayName = "Alterar Data de Nascimento do Aluno deve alterar com sucesso")]
     [Trait("Categoria", "Aluno Testes")]

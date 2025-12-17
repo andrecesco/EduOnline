@@ -57,18 +57,22 @@ public abstract class MainController : ControllerBase
     {
         if (OperacaoValida())
         {
-            return Ok(new
+            var okResult = new ResponseResult
             {
-                success = true,
-                data = result
-            });
+                Success = true,
+                Data = result
+            };
+
+            return Ok(okResult);
         }
 
-        return BadRequest(new
+        var errorResponse = new ResponseResult
         {
-            success = false,
-            errors = _notificador?.ObterNotificacoes().Select(n => n.Mensagem) ?? _domainNotifications.ObterNotificacoes().Select(d => d.Value)
-        });
+            Success = false,
+            Errors = _notificador?.ObterNotificacoes().Select(n => new DomainNotification(string.Empty, n.Mensagem)) ?? _domainNotifications.ObterNotificacoes()
+        };
+
+        return BadRequest(errorResponse);
     }
 
     protected ActionResult NotificarValidationResult(ValidationResult validationResult)
@@ -105,4 +109,12 @@ public abstract class MainController : ControllerBase
 
         _domainNotifications?.Handle(new DomainNotification(Guid.NewGuid().ToString(), mensagem), CancellationToken.None).Wait();
     }
+}
+
+
+public class ResponseResult
+{
+    public bool Success { get; set; }
+    public object Data { get; set; }
+    public IEnumerable<DomainNotification> Errors { get; set; }
 }
