@@ -13,7 +13,6 @@ public class AlunoCommandHandlerTest
 {
     private readonly Mock<IAlunoRepository> _repositoryMock;
     private readonly Mock<IMediatorHandler> _mediatorMock;
-    private readonly AlunoCommandHandler _handler;
 
     public AlunoCommandHandlerTest()
     {

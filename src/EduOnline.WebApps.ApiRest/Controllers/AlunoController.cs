@@ -1,5 +1,7 @@
 ﻿using EduOnline.Alunos.Application.Commands;
 using EduOnline.Alunos.Application.Queries;
+using EduOnline.Alunos.Application.Queries.Dtos;
+using EduOnline.Alunos.Domain.Models;
 using EduOnline.Conteudos.Domain;
 using EduOnline.Core.Communication.Mediator;
 using EduOnline.Core.ControleDeAcesso;
@@ -35,6 +37,8 @@ public class AlunoController : MainController
     }
 
     [Authorize(Roles = "Administrador")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [HttpGet()]
     public async Task<IActionResult> ObterTodos()
     {
@@ -43,6 +47,8 @@ public class AlunoController : MainController
     }
 
     [Authorize(Roles = "Administrador")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [HttpGet("{id}")]
     public async Task<IActionResult> ObterPorId(Guid id)
     {
@@ -59,6 +65,7 @@ public class AlunoController : MainController
             return Unauthorized();
 
         var matriculas = await _alunoQuery.ObterMatriculasPorAlunoId(id);
+
         return CustomResponse(matriculas);
     }
 
@@ -69,6 +76,7 @@ public class AlunoController : MainController
             return Unauthorized();
 
         var matricula = await _alunoQuery.ObterMatriculaPorId(matriculaId);
+
         return CustomResponse(matricula);
     }
 
@@ -90,6 +98,10 @@ public class AlunoController : MainController
     }
 
     [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseResult))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Route("{id}")]
     public async Task<IActionResult> AtualizarAluno(Guid id, AtualizarAlunoRequest request)
     {
@@ -110,7 +122,7 @@ public class AlunoController : MainController
     public async Task<IActionResult> MatricularAluno(Guid id, [FromBody]AdicionarMatriculaRequest request)
     {
         if (id != _user.GetUserId() && !_user.IsInRole("Administrador"))
-            return Unauthorized();
+            return Forbid();
 
         var curso = await _cursoRepository.ObterCursoValidoPorIdAsync(request.CursoId);
 

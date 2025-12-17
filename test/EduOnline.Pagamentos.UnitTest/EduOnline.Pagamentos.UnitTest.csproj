@@ -20,4 +20,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EduOnline.Pagamentos.Domain\EduOnline.Pagamentos.Domain.csproj" />
+    <ProjectReference Include="..\..\src\EduOnline.Pagamentos.AntiCorruption\EduOnline.Pagamentos.AntiCorruption.csproj" />
+  </ItemGroup>
+
 </Project>
